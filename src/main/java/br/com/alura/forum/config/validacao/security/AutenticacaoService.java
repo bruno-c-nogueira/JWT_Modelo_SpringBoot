@@ -14,6 +14,7 @@ import java.util.Optional;
 public class AutenticacaoService implements UserDetailsService {
     @Autowired
     private UsuarioRepository usuarioRepository;
+
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         Optional<Usuario> usuario = usuarioRepository.findByEmail(userName);

@@ -39,20 +39,16 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(autenticacaoService).passwordEncoder(new BCryptPasswordEncoder());
 
     }
-    //Configura recursos estaticos
-    @Override
-    public void configure(WebSecurity web) throws Exception {
 
-    }
+
     //Controle de acessos
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/topicos").permitAll()
-        .antMatchers(HttpMethod.GET,"/topicos/*").permitAll()
-        .antMatchers("/auth").permitAll()
-        .anyRequest().authenticated()
-        .and().csrf().disable()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and().addFilterBefore(new AutenticacaoTokenFilter(tokenService,repository), UsernamePasswordAuthenticationFilter.class);
+        http.authorizeRequests()
+                .antMatchers("/auth").permitAll()
+                .anyRequest().authenticated()
+                .and().csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().addFilterBefore(new AutenticacaoTokenFilter(tokenService, repository), UsernamePasswordAuthenticationFilter.class);
     }
 }
